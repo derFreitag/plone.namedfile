@@ -282,6 +282,19 @@ class ImageScaling(BrowserView):
             if quality:
                 parameters['quality'] = quality
 
+        from plone import api
+        from PIL import Image
+        from StringIO import StringIO
+        workflow_state = api.content.get_state(self.context)
+        if workflow_state == 'recommended':
+            background = Image.open(orig_data)
+            foreground = Image.open(api.portal.get()['assets']['eb_banderole2.png'].image.openDetached())
+            x_offset = background.size[0] - foreground.size[0]
+            background.paste(foreground, (x_offset, 0),foreground)
+            output = StringIO()
+            image_format = orig_value.contentType.split('/')[1]
+            background.save(output, format=image_format)
+            orig_data = output
         try:
             result = scaleImage(orig_data,
                                 direction=direction,
