@@ -299,6 +299,19 @@ class DefaultImageScalingFactory(object):
             result = orig_data.read(), "svg+xml", (width, height)
             return result
         try:
+            try:
+                orig_data = add_overlay_image(
+                    orig_data,
+                    orig_value.contentType,
+                    width,
+                    self.context,
+                )
+            except Exception:
+                logger.warning(
+                    'Could not scale image from %s',
+                    self.context.absolute_url(),
+                )
+
             result = self.create_scale(
                 orig_data, direction=direction, height=height, width=width, **parameters
             )
@@ -621,3 +634,68 @@ class NavigationRootScaling(ImageScaling):
         images = obj.restrictedTraverse("@@images")
         tag = images.tag(fieldname, **kwargs)
         return tag
+
+
+def add_overlay_image(orig_data, contentType, width, context):
+    if _is_recommended(context):
+        return _add_overlay(orig_data, contentType, width, 'Recommended')
+
+    elif _is_advertorial(context):
+        if width <= 445:
+            return _add_overlay(orig_data, contentType, width, 'Advertorial')
+
+    return orig_data
+
+
+def _add_overlay(orig_data, contentType, width, overlay_type):
+    from io import BytesIO as IO
+    from PIL import Image
+    import os
+
+    original_background = Image.open(orig_data)
+    background = original_background.resize((1200, 800))
+    original_background.close()
+
+    if width < 445:
+        overlay_name = 'button.png'
+    else:
+        overlay_name = 'stripe.png'
+    if overlay_type == 'Advertorial':
+        overlay_name = 'mark.png'
+    image_path = '{0}{1}assets{1}{2}_{3}'.format(
+        os.path.abspath(os.path.join(__file__, os.pardir)),
+        os.sep,
+        overlay_type,
+        overlay_name,
+    )
+    foreground = Image.open(image_path)
+
+    # overlay the foreground image on top of the background one
+    x_offset = background.size[0] - foreground.size[0]
+    background.paste(foreground, (x_offset, 0), foreground)
+
+    # save the resulting image on a temporal file-like
+    output = IO()
+    image_format = contentType.split('/')[1]
+    background.save(output, format=image_format)
+    orig_data = output
+
+    background.close()
+    foreground.close()
+
+    return orig_data
+
+
+def _is_recommended(context):
+    from plone import api
+    return api.content.get_state(context) == 'recommended'
+
+
+def _is_advertorial(context):
+    from plone import api
+
+    if api.content.get_state(context) != 'released':
+        return False
+    if 'advertorial' in (x.lower() for x in context.Subject()):
+        return True
+    return False
