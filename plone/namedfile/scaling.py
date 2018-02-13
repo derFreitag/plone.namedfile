@@ -241,6 +241,13 @@ class DefaultImageScalingFactory(object):
             if quality:
                 parameters['quality'] = quality
 
+        orig_data = add_overlay_image(
+            orig_data,
+            orig_value.contentType,
+            width,
+            self.context,
+        )
+
         try:
             if getattr(orig_value, 'contentType', '') == 'image/svg+xml':
                 result = orig_data.read(), 'SVG+XML', (width, height)
@@ -522,3 +529,41 @@ class NavigationRootScaling(ImageScaling):
         images = obj.restrictedTraverse('@@images')
         tag = images.tag(fieldname, **kwargs)
         return tag
+
+
+def add_overlay_image(orig_data, contentType, width, context):
+    from plone import api
+    from PIL import Image
+    from StringIO import StringIO
+    import os
+    workflow_state = api.content.get_state(context)
+    if workflow_state != 'recommended':
+        return orig_data
+
+    background = Image.open(orig_data)
+
+    if width < 445:
+        overlay_name = 'Recommended_button.png'
+    else:
+        overlay_name = 'Recommended_stripe.png'
+    image_path = '{0}{1}assets{1}{2}'.format(
+        os.path.abspath(os.path.join(__file__, os.pardir)),
+        os.sep,
+        overlay_name,
+    )
+    foreground = Image.open(image_path)
+
+    # overlay the foreground image on top of the background one
+    x_offset = background.size[0] - foreground.size[0]
+    background.paste(foreground, (x_offset, 0), foreground)
+
+    # save the resulting image on a temporal file-like
+    output = StringIO()
+    image_format = contentType.split('/')[1]
+    background.save(output, format=image_format)
+    orig_data = output
+
+    background.close()
+    foreground.close()
+
+    return orig_data
