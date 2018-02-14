@@ -241,12 +241,20 @@ class DefaultImageScalingFactory(object):
             if quality:
                 parameters['quality'] = quality
 
-        orig_data = add_overlay_image(
-            orig_data,
-            orig_value.contentType,
-            width,
-            self.context,
-        )
+        try:
+            orig_data = add_overlay_image(
+                orig_data,
+                orig_value.contentType,
+                width,
+                self.context,
+            )
+        except Exception:
+            from logging import getLogger
+            logger = getLogger('plone.namedfile')
+            logger.warn(
+                'Could not scale image from %s',
+                self.context.absolute_url(),
+            )
 
         try:
             if getattr(orig_value, 'contentType', '') == 'image/svg+xml':
