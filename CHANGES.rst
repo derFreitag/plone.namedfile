@@ -1,7 +1,7 @@
 Changelog
 =========
 
-3.0.11.post1 (unreleased)
+3.0.11.post1 (2018-02-23)
 -------------------------
 
 - Remove leftovers.
