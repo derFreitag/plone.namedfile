@@ -4,7 +4,8 @@ Changelog
 3.0.11.post1 (unreleased)
 -------------------------
 
-- Nothing changed yet.
+- Remove leftovers.
+  [gforcada]
 
 
 3.0.11.post0 (2018-02-23)
