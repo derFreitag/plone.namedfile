@@ -541,6 +541,9 @@ def add_overlay_image(orig_data, contentType, width, context):
     if _is_recommended(context):
         return _add_overlay(orig_data, contentType, width, 'Recommended')
 
+    elif _is_daily_comment(context):
+        return _add_overlay(orig_data, contentType, width, 'Daily')
+
     return orig_data
 
 
@@ -584,3 +587,14 @@ def _add_overlay(orig_data, contentType, width, overlay_type):
 def _is_recommended(context):
     from plone import api
     return api.content.get_state(context) == 'recommended'
+
+
+def _is_daily_comment(context):
+    from plone import api
+    if api.content.get_state(context) != 'published':
+        return False
+
+    if 'kommentar des tages' in (x.lower() for x in context.Subject()):
+        return True
+
+    return False
