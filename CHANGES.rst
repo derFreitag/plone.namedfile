@@ -4,7 +4,8 @@ Changelog
 3.0.11.post2 (unreleased)
 -------------------------
 
-- Nothing changed yet.
+- Force orignal images to be always be 1200 x 800.
+  [gforcada]
 
 
 3.0.11.post1 (2018-02-23)
