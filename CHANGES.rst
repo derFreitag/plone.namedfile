@@ -4,8 +4,8 @@ Changelog
 3.0.11.post3 (unreleased)
 -------------------------
 
-- Nothing changed yet.
-
+- Add an overlay for articles that are comment of the day.
+  [gforcada]
 
 3.0.11.post2 (2018-02-27)
 -------------------------
