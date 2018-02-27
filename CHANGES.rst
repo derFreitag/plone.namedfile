@@ -1,7 +1,7 @@
 Changelog
 =========
 
-3.0.11.post2 (unreleased)
+3.0.11.post2 (2018-02-27)
 -------------------------
 
 - Force orignal images to be always be 1200 x 800.
