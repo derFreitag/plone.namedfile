@@ -368,25 +368,32 @@ class ImageScaling(BrowserView):
 
 
 def add_overlay_image(orig_data, contentType, width, context):
-    from plone import api
+    if _is_recommended(context):
+        return _add_overlay(orig_data, contentType, width, 'Recommended')
+
+    elif _is_daily_comment(context):
+        return _add_overlay(orig_data, contentType, width, 'Daily')
+
+    return orig_data
+
+
+def _add_overlay(orig_data, contentType, width, overlay_type):
     from PIL import Image
     from StringIO import StringIO
     import os
-    workflow_state = api.content.get_state(context)
-    if workflow_state != 'recommended':
-        return orig_data
 
     original_background = Image.open(orig_data)
     background = original_background.resize((1200, 800))
     original_background.close()
 
     if width < 445:
-        overlay_name = 'Recommended_button.png'
+        overlay_name = 'button.png'
     else:
-        overlay_name = 'Recommended_stripe.png'
-    image_path = '{0}{1}assets{1}{2}'.format(
+        overlay_name = 'stripe.png'
+    image_path = '{0}{1}assets{1}{2}_{3}'.format(
         os.path.abspath(os.path.join(__file__, os.pardir)),
         os.sep,
+        overlay_type,
         overlay_name,
     )
     foreground = Image.open(image_path)
@@ -405,3 +412,19 @@ def add_overlay_image(orig_data, contentType, width, context):
     foreground.close()
 
     return orig_data
+
+
+def _is_recommended(context):
+    from plone import api
+    return api.content.get_state(context) == 'recommended'
+
+
+def _is_daily_comment(context):
+    from plone import api
+    if api.content.get_state(context) != 'published':
+        return False
+
+    if 'kommentar des tages' in (x.lower() for x in context.Subject()):
+        return True
+
+    return False
