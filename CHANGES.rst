@@ -1,7 +1,7 @@
 Changelog
 =========
 
-3.0.11.post3 (unreleased)
+3.0.11.post3 (2018-02-28)
 -------------------------
 
 - Add an overlay for articles that are comment of the day.
