@@ -6,11 +6,17 @@ Changelog
 
 Breaking changes:
 
-- *add item here*
+- Add an overlay image on objects with the recommended workflow state.
+  There are two overlay images, depending on the size of the image scale either of them is applied.
+  [gforcada]
 
 New features:
 
-- *add item here*
+- Force orignal images to be always be 1200 x 800.
+  [gforcada]
+
+- Add an overlay for articles that are comment of the day.
+  [gforcada]
 
 Bug fixes:
 
