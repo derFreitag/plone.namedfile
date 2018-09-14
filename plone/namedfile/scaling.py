@@ -546,7 +546,9 @@ def add_overlay_image(orig_data, contentType, width, context):
     if workflow_state != 'recommended':
         return orig_data
 
-    background = Image.open(orig_data)
+    original_background = Image.open(orig_data)
+    background = original_background.resize((1200, 800))
+    original_background.close()
 
     if width < 445:
         overlay_name = 'Recommended_button.png'
