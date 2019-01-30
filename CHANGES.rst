@@ -8,6 +8,12 @@ Changelog
 
 .. towncrier release notes start
 
+4.2.6.post1 (2019-01-30)
+------------------------
+
+No significant changes.
+
+
 4.2.6.post0 (2019-01-22)
 ------------------------
 
