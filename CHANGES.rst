@@ -8,6 +8,26 @@ Changelog
 
 .. towncrier release notes start
 
+5.3.0.post0 (2020-06-09)
+------------------------
+
+Breaking changes:
+
+
+- Add an overlay image on objects with the recommended workflow state.
+  There are two overlay images, depending on the size of the image scale either of them is applied.
+  [gforcada] (#999)
+
+
+New features:
+
+
+- Add an overlay for articles that are comment of the day.
+  [gforcada] (#998)
+- Force original images to be always be 1200 x 800.
+  [gforcada] (#999)
+
+
 5.3.0 (2020-04-21)
 ------------------
 
