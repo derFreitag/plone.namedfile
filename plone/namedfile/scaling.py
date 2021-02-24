@@ -553,8 +553,13 @@ def add_overlay_image(orig_data, contentType, width, context):
 
 def _add_overlay(orig_data, contentType, width, overlay_type):
     from PIL import Image
-    from StringIO import StringIO
+    import six
     import os
+
+    if six.PY3:
+        from io import BytesIO as IO
+    else:
+        from StringIO import StringIO as IO
 
     original_background = Image.open(orig_data)
     background = original_background.resize((1200, 800))
@@ -577,7 +582,7 @@ def _add_overlay(orig_data, contentType, width, overlay_type):
     background.paste(foreground, (x_offset, 0), foreground)
 
     # save the resulting image on a temporal file-like
-    output = StringIO()
+    output = IO()
     image_format = contentType.split('/')[1]
     background.save(output, format=image_format)
     orig_data = output
