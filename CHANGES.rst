@@ -8,6 +8,16 @@ Changelog
 
 .. towncrier release notes start
 
+5.4.0.post1 (2021-03-31)
+------------------------
+
+New features:
+
+
+- Add python 3 compatibility.
+  [gforcada] (#1)
+
+
 5.4.0.post0 (2020-08-21)
 ------------------------
 
