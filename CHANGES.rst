@@ -8,6 +8,16 @@ Changelog
 
 .. towncrier release notes start
 
+5.4.0.post3 (2022-07-07)
+------------------------
+
+New features:
+
+
+- Add new version of the overlay image.
+  [gforcada] (#2701)
+
+
 5.4.0.post3 (unreleased)
 ------------------------
 
