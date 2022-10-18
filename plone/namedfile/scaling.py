@@ -548,6 +548,9 @@ def add_overlay_image(orig_data, contentType, width, context):
     elif _is_daily_comment(context):
         return _add_overlay(orig_data, contentType, width, 'Daily')
 
+    elif _is_advertorial(context):
+        return _add_overlay(orig_data, contentType, width, 'Advertorial')
+
     return orig_data
 
 
@@ -569,6 +572,8 @@ def _add_overlay(orig_data, contentType, width, overlay_type):
         overlay_name = 'button.png'
     else:
         overlay_name = 'stripe.png'
+    if overlay_type == 'Advertorial':
+        overlay_name = 'mark.png'
     image_path = '{0}{1}assets{1}{2}_{3}'.format(
         os.path.abspath(os.path.join(__file__, os.pardir)),
         os.sep,
@@ -606,4 +611,13 @@ def _is_daily_comment(context):
     if 'kommentar des tages' in (x.lower() for x in context.Subject()):
         return True
 
+    return False
+
+
+def _is_advertorial(context):
+    from plone import api
+    if api.content.get_state(context) != 'released':
+        return False
+    if 'advertorial' in (x.lower() for x in context.Subject()):
+        return True
     return False
