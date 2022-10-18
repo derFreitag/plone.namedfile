@@ -8,6 +8,16 @@ Changelog
 
 .. towncrier release notes start
 
+5.4.0.post4 (2022-10-18)
+------------------------
+
+New features:
+
+
+- Add overlay for advertorial articles.
+  [margaridap] (#2736)
+
+
 5.4.0.post3 (2022-07-07)
 ------------------------
 
