@@ -8,6 +8,16 @@ Changelog
 
 .. towncrier release notes start
 
+5.4.0.post5 (2022-10-19)
+------------------------
+
+Bug fixes:
+
+
+- Advertorial overlay image in RGBA mode.
+  [margaridap] (#2736)
+
+
 5.4.0.post4 (2022-10-18)
 ------------------------
 
