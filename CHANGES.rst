@@ -8,6 +8,16 @@ Changelog
 
 .. towncrier release notes start
 
+5.4.0.post6 (2022-11-15)
+------------------------
+
+Bug fixes:
+
+
+- Only show advertorial mark on listings and make it bigger.
+  [margaridap] (#2736)
+
+
 5.4.0.post5 (2022-10-19)
 ------------------------
 
