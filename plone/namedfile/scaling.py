@@ -641,7 +641,7 @@ def add_overlay_image(orig_data, contentType, width, context):
         return _add_overlay(orig_data, contentType, width, 'Recommended')
 
     elif _is_advertorial(context):
-        if width <= 445:
+        if width <= 770:
             return _add_overlay(orig_data, contentType, width, 'Advertorial')
 
     return orig_data
