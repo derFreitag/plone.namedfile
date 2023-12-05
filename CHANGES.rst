@@ -8,6 +8,20 @@ Changelog
 
 .. towncrier release notes start
 
+5.6.1.post0 (2023-12-05)
+------------------------
+
+Breaking changes:
+
+
+- Add an overlay image on objects with the recommended workflow state.
+  There are two overlay images, depending on the size of the image scale either of them is applied.
+  [gforcada] (#1)
+- Add overlay for advertorial articles.
+  Only show advertorial mark on listings and make it bigger.
+  [margaridap] (#2)
+
+
 5.6.1 (2023-09-21)
 ------------------
 
